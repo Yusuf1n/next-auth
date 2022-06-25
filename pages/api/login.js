@@ -6,23 +6,6 @@ const db = require("../../db");
 
 const secret = process.env.SECRET;
 
-// export default async function handle(req, res) {
-//   const { email, password } = req.body;
-//   // console.log(req.body);
-
-//   // if (req.method === "GET") {
-//   //   const handleGET = await sql.execute("SELECT * FROM Movie", db.nextjsDb);
-//   //   res.json(...handleGET.recordset);
-//   // }
-//   if (req.method === "POST") {
-//     const handleGET = await sql.execute(
-//       `SELECT * FROM Users WHERE email = '${email}' AND password = '${password}'`,
-//       db.nextjsDb
-//     );
-//     res.json(handleGET);
-//   }
-// }
-
 export default async function (req, res) {
   const { email, password } = req.body;
 
@@ -54,10 +37,6 @@ export default async function (req, res) {
       path: "/",
     });
 
-    // headers: {
-    //   "Set-Cookie", serialize;
-    // }
-    // }
     res.setHeader("Set-Cookie", serialised);
     res.status(200).json({ message: "Success!" });
   } else if (data === 0) {

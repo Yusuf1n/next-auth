@@ -11,28 +11,28 @@ export default function middleware(req) {
   const jwt = cookies.JWTCookie;
   const url = req.url;
   //   console.log(`jwt ${jwt}`);
-  const domain = req.nextUrl.clone();
-  domain.pathname = "/login";
-  const domain2 = req.nextUrl.clone();
-  domain2.pathname = "/";
+  const login = req.nextUrl.clone();
+  login.pathname = "/login";
+  const home = req.nextUrl.clone();
+  home.pathname = "/";
 
-  if (url.includes("/login")) {
+  if (url.includes("/login") || url.includes("/register")) {
     if (jwt) {
-      return NextResponse.redirect(domain2);
+      return NextResponse.redirect(home);
     }
     return NextResponse.next();
   }
 
   if (url.includes("/dashboard")) {
     if (jwt === undefined) {
-      return NextResponse.redirect(domain);
+      return NextResponse.redirect(login);
     }
     // try {
-    //   //   verify(jwt, secret);
+    //   verify(jwt, secret);
     //   jwtVerify(jwt, secret);
     //   return NextResponse.next();
     // } catch (e) {
-    //   return NextResponse.redirect(domain);
+    //   return NextResponse.redirect(login);
     // }
     // const email = jwt.verify(jwt, secret);
     // console.log(email);

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Layout from "../components/layout";
+import NavbarLogout from "../components/navbar-logout";
 import axios from "axios";
 
 export default function Home() {
@@ -18,7 +19,7 @@ export default function Home() {
 
   return (
     <div>
-      <Layout form="Home" />
+      <NavbarLogout />
 
       <button onClick={() => handleGetUser()}>User</button>
       <button onClick={() => handleLogOut()}>Log Out</button>
