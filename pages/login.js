@@ -2,7 +2,7 @@ import Layout from "../components/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import Link from "next/link";
 
 const sql = require("../sql");
 const db = require("../db");
@@ -10,6 +10,7 @@ const db = require("../db");
 export default function Login({ data }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const router = useRouter();
 
@@ -18,39 +19,42 @@ export default function Login({ data }) {
 
     const body = { email, password };
     const response = await axios.post("api/login", body);
-    console.log(response);
+    // console.log(response.data);
 
-    // if (response.status === 200) {
-    // router.push("dashboard/user");
-    // }
-
-    {
-      data.map((user) => {
-        if (user.email === email && user.password === password) {
-          // setMessage(`Hello ${user.name}`);
-          const name = user.name;
-          router.push({
-            pathname: "dashboard/user",
-            query: { name, email, password },
-          });
-        }
-      });
+    if (response.status === 200) {
+      // router.push({
+      //   pathname: "dashboard/user",
+      //   query: { email, password },
+      // });
+      console.log(response.data.message);
+      console.log(response.data.name);
+      localStorage.setItem("name", response.data.name);
+      localStorage.setItem("email", email);
+      router.push("/dashboard/user");
+    } else if (response.status === 401) {
+      setErrMsg("Incorrect username or password");
     }
+
+    //   {
+    //     data.map((user) => {
+    //       console.log(user);
+    //       const name = user.name;
+    //       if (user.email === email && user.password === password) {
+    //         router.push({
+    //           pathname: "dashboard/user",
+    //           query: { name, email, password },
+    //         });
+    //       }
+    //     });
+    //   }
   };
 
   return (
     <div>
-      <Head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
-          crossorigin="anonymous"
-        />
-      </Head>
-
       <form className="form-signin w-100 m-auto" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        {/* <h1>{name}</h1> */}
+        <h1>{errMsg}</h1>
         <input
           type="email"
           className="form-control"
@@ -70,6 +74,20 @@ export default function Login({ data }) {
         <button className="w-100 btn btn-lg btn-primary" type="submit">
           Sign in
         </button>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p>Don't have an account?</p>
+            </div>
+            <div class="col">
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <h3>{errMsg}</h3>
       </form>
     </div>
   );

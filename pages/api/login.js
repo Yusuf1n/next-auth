@@ -14,6 +14,9 @@ export default async function (req, res) {
     `SELECT * FROM Users WHERE email = '${email}'`,
     db.nextjsDb
   );
+  const data = handlePOST.recordset;
+  const _name = data[0].name;
+
   // console.log(handlePOST.recordset[0].password);
   const dbPassword = handlePOST.recordset[0].password;
   bcrypt.compare(password, dbPassword, function (err, result) {
@@ -39,7 +42,7 @@ export default async function (req, res) {
       });
 
       res.setHeader("Set-Cookie", serialised);
-      res.status(200).json({ message: "Success!" });
+      res.status(200).json({ message: "Success!", name: _name });
     } else if (result === false) {
       console.log("not working");
       res.status(401).json({ message: "Invalid credentials!" });

@@ -2,7 +2,7 @@ import Layout from "../components/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import Link from "next/link";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -22,15 +22,6 @@ export default function Register() {
 
   return (
     <div>
-      <Head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
-          crossorigin="anonymous"
-        />
-      </Head>
-
       <form className="form-signin w-100 m-auto" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 fw-normal">Please register</h1>
         <input
@@ -59,6 +50,19 @@ export default function Register() {
         <button className="w-100 btn btn-lg btn-primary" type="submit">
           Submit
         </button>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p>Already have an account?</p>
+            </div>
+            <div class="col">
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   );

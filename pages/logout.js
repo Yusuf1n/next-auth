@@ -8,7 +8,8 @@ export default function Home() {
     const user = await axios.get("api/logout");
 
     console.log(user);
-    router.push("login");
+    localStorage.clear();
+    router.push("/login");
   };
 
   return (
