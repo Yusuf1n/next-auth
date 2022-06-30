@@ -8,6 +8,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const router = useRouter();
 
@@ -15,15 +16,25 @@ export default function Register() {
     e.preventDefault();
     const body = { name, email, password };
 
-    const response = await axios.post("api/register", body);
-    console.log(body);
-    await router.push("/login");
+    try {
+      const response = await axios.post("api/register", body);
+      console.log(response.data);
+
+      if (response.status === 200) {
+        await router.push("/login");
+      }
+    } catch (ex) {
+      if (ex.response.status === 401) {
+        setErrMsg(`An account with the email ${email} already exists`);
+      }
+    }
   };
 
   return (
     <div>
       <form className="form-signin w-100 m-auto" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 fw-normal">Please register</h1>
+        <h5 className="h5 mb-3 text-danger">{errMsg}</h5>
         <input
           className="form-control mb-2"
           placeholder="Name"
