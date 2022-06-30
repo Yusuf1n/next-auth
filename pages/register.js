@@ -25,7 +25,7 @@ export default function Register() {
       <form className="form-signin w-100 m-auto" onSubmit={handleSubmit}>
         <h1 className="h3 mb-3 fw-normal">Please register</h1>
         <input
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Name"
           required
           onChange={(e) => setName(e.target.value)}
@@ -33,7 +33,7 @@ export default function Register() {
 
         <input
           type="email"
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Email"
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -41,13 +41,13 @@ export default function Register() {
 
         <input
           type="password"
-          className="form-control"
+          className="form-control mb-3"
           placeholder="Password"
           required
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-100 btn btn-lg btn-primary" type="submit">
+        <button className="w-100 btn btn-lg btn-primary mb-3" type="submit">
           Submit
         </button>
 

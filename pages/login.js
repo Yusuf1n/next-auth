@@ -18,21 +18,25 @@ export default function Login({ data }) {
     e.preventDefault();
 
     const body = { email, password };
-    const response = await axios.post("api/login", body);
-    // console.log(response.data);
+    try {
+      const response = await axios.post("api/login", body);
+      console.log(response);
 
-    if (response.status === 200) {
-      // router.push({
-      //   pathname: "dashboard/user",
-      //   query: { email, password },
-      // });
-      console.log(response.data.message);
-      console.log(response.data.name);
-      localStorage.setItem("name", response.data.name);
-      localStorage.setItem("email", email);
-      router.push("/dashboard/user");
-    } else if (response.status === 401) {
-      setErrMsg("Incorrect username or password");
+      if (response.status === 200) {
+        // router.push({
+        //   pathname: "dashboard/user",
+        //   query: { email, password },
+        // });
+        console.log(response.data.message);
+        console.log(response.data.name);
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("email", email);
+        router.push("/dashboard/user");
+      }
+    } catch (ex) {
+      if (ex.response.status === 401 || ex.response.status === 500) {
+        setErrMsg("Invalid email or password");
+      }
     }
 
     //   {
@@ -52,12 +56,11 @@ export default function Login({ data }) {
   return (
     <div>
       <form className="form-signin w-100 m-auto" onSubmit={handleSubmit}>
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-        {/* <h1>{name}</h1> */}
-        <h1>{errMsg}</h1>
+        <h1 className="h3 mb-3 fw-normal">Please login</h1>
+        <h5 className="h5 mb-3 text-danger">{errMsg}</h5>
         <input
           type="email"
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Email"
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -65,14 +68,14 @@ export default function Login({ data }) {
 
         <input
           // type="password"
-          className="form-control"
+          className="form-control mb-3"
           placeholder="Password"
           required
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-100 btn btn-lg btn-primary" type="submit">
-          Sign in
+        <button className="w-100 btn btn-lg btn-primary mb-3" type="submit">
+          Login
         </button>
 
         <div class="container">
@@ -87,7 +90,6 @@ export default function Login({ data }) {
             </div>
           </div>
         </div>
-        <h3>{errMsg}</h3>
       </form>
     </div>
   );
