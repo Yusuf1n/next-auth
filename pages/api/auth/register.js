@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
-const sql = require("../../sql");
-const db = require("../../db");
+const sql = require("../../../sql");
+const db = require("../../../db");
 
 export default async function handle(req, res) {
   const { name, email, password } = req.body;

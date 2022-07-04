@@ -2,8 +2,8 @@ import { sign } from "jsonwebtoken";
 import { serialize } from "cookie";
 import bcrypt from "bcrypt";
 
-const sql = require("../../sql");
-const db = require("../../db");
+const sql = require("../../../sql");
+const db = require("../../../db");
 
 const secret = process.env.SECRET;
 

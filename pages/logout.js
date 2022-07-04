@@ -5,7 +5,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleLogOut = async () => {
-    const user = await axios.get("api/logout");
+    const user = await axios.get("api/auth/logout");
 
     console.log(user);
     localStorage.clear();

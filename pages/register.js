@@ -17,7 +17,7 @@ export default function Register() {
     const body = { name, email, password };
 
     try {
-      const response = await axios.post("api/register", body);
+      const response = await axios.post("api/auth/register", body);
       console.log(response.data);
 
       if (response.status === 200) {
@@ -55,6 +55,7 @@ export default function Register() {
           className="form-control mb-3"
           placeholder="Password"
           required
+          minlength="7"
           onChange={(e) => setPassword(e.target.value)}
         />
 
